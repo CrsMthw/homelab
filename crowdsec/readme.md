@@ -63,7 +63,7 @@ If you haven't used my files, refer to my [traefik data folder](https://git.crsm
 
 - Login as root
 ```
-sudo sudo
+sudo su
 ```
 - Go to the crowdsec docker volume
 ```
