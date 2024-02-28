@@ -69,12 +69,15 @@ echo $(htpasswd -nB USER) | sed -e s/\\$/\\$\\$/g
 ## Run
 
 Go to the directory with the compose.yml
+
 Run it with ```docker compose up -d```
+
 If everything is done right, you will be able to access the traefik dashboard at traefik.YOURDOMAIN.com in a few moments.
 
 ## How to expose my docker containers to the internet
 
 First make sure you have created a DNS entry in your cloudflare for the service you want to expose
+
 Then all you have to do is add these labels to the compose.yml of all your containers that you want to expose:
 ```
     labels:
@@ -87,7 +90,9 @@ Then all you have to do is add these labels to the compose.yml of all your conta
       - "traefik.docker.network=proxy"
 ```
 Replace ```CONTAINER_NAME``` with the name of the docker container
+
 Replace ```SUBDOMAIN.YOURDOMAIN.COM```  with the URL you want your container webui to be exposed at.
+
 Replace ```PORT_OF_CONTAINER_WEBUI``` with the port of the container's webui
 
 ### Example compose.yml of Heimdall Dashboard exposed with Traefik
@@ -123,6 +128,7 @@ networks:
 ## How to expose anything else
 
 By anything else I mean services on other computers or containers that cannot use the proxy network, like home-assistant for example which needs host network.
+
 For this you need to make entries in the config.yml file. An example of home-assistant is already given in the config.yml file.
 
 
