@@ -1,0 +1,41 @@
+
+homeassistant:
+  name: Home
+  latitude: 
+  longitude: 
+  elevation: 
+  unit_system: metric
+  currency: SAR
+  time_zone: "Asia/Riyadh"
+  country: SA
+  external_url: "https://hass.example.com"
+  internal_url: "http://ip_address:8123"
+  allowlist_external_dirs:
+    - "/tmp"
+  allowlist_external_urls:
+    - "http://images.com/image1.png"
+  media_dirs:
+    media: "/media"
+    # recordings: "/mnt/recordings"
+
+# Loads default set of integrations. Do not remove.
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+  extra_module_url:
+    - /config/www/community/lovelace-card-mod/card-mod.js
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - DOCKER_IP_ADDRESS_OF_TRAEFIK
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
