@@ -74,8 +74,12 @@ lake
 - Make the required changes: the timezones, volume mounts, and IP address for plex and jellyfin sections and save it
 - Run it using ```docker compose up -d```
 - Go through the web-ui of all the apps and do all the settings and connections like connecting overseerr to radarr and sonarr, and connecting prowlarr to radarr, sonarr, lidarr, etc.
+- Go to Plex and/or Jellyfin web-ui and set up all your media folders. Like Movies = /media/movies.
 - Since autoscan and deleterr do not have a webui, they have to be configured using config files. Copy the config files for autoscan and deleterr (optional) and make changes to it as per your needs and save them.
 - Restart the entire stack by going into the directory with the compose.yml file and entering ```docker compose up -d --force-recreate```
 
 ## How to use
 
+Once you setup and install everything and do all the configs and connections right, you can go to ```ovs.example.com``` to request a movie/show and everything else should be done automagically in the backend, and the media will be available on your plex/jellyfin to enjoy!
+
+For everything else other than movies/shows, you have to visit the respective app to request for the media you want.
