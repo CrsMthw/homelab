@@ -57,6 +57,41 @@ If you have used my files, uncomment the parts in both traefik.yml and config.ym
 
 If you haven't used my files, refer to my [traefik data folder](https://git.crsmthw.com/crsmthw/homelab/src/branch/main/traefik/data) and add those parts from my config.yml and traefik.yml.
 
+## Optional Steps
+
+### Add your own public IP to the whitelist to prevent getting banned
+
+- Login as root
+```
+sudo sudo
+```
+- Go to the crowdsec docker volume
+```
+cd /var/lib/docker/volumes/crowdsec_crowdsec-config/_data/parsers/s02-enrich
+```
+- Create a file called ```mywhitelists.yaml```
+```
+nano mywhitelists.yaml
+```
+- Paste the following in it:
+```
+name: crowdsecurity/whitelists
+description: "Whitelist events from my ip addresses"
+whitelist:
+  reason: "my ip ranges"
+  ip:
+    - "YOUR.IP.ADDRESS.HERE"
+```
+- Replace ```YOUR/IP.ADDRESS.HERE``` with your IP Address, save and exit.
+
+- Restart crowdsec with ```docker restart crowdsec```
+
+### To enable notifications like telegram, gotify or more
+
+Follow the instructions from the official documentations [here](https://docs.crowdsec.net/docs/notification_plugins/intro)
+
+Only difference is the directory to make changes, where in our case it will be in ```/var/lib/docker/volumes/crowdsec_crowdsec-config/_data/``` and you will need to login as root with ```sudo su``` to access this directory.
+
 ## Credits
 
 Huge thanks to Techno Tim! You can watch his video tutorial [here](https://youtu.be/-GxUP6bNxF0?si=7dpWFtDHyq8JWBZi)
