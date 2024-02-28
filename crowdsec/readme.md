@@ -47,4 +47,4 @@ docker exec crowdsec-example cscli bouncers add traefik-bouncer
 
 - Uncomment that whole section and save it.
 
-- Recreate crowdsec with ```docker compose up -d --force-recreate
+- Recreate crowdsec with ```docker compose up -d --force-recreate```
