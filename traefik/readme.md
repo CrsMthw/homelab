@@ -1,6 +1,8 @@
 # Traefik reverse proxy with automatic wildcard SSL from cloudflare 
 
-First create a docker network called "proxy" usig the following command:
+Create a DNS entry in your cloudflare: ```traefik.YOURDOMAIN.com``` Make sure it is not proxied at first (necessary for creating SSL certificate), you can enable proxy later after everything.
+
+Create a docker network called "proxy" using the following command:
 ```
 docker network create proxy
 ```
@@ -63,3 +65,14 @@ echo $(htpasswd -nB USER) | sed -e s/\\$/\\$\\$/g
     - Replace USER with your username
     - Enter a password when it prompts
     - Copy paste the generated hashed password into the compose.yml file
+
+## Run
+
+Go to the directory with the compose.yml
+Run it with ```docker compose up -d```
+If everything is done right, you will be able to access the traefik dashboard at traefik.YOURDOMAIN.com in a few moments.
+
+
+## Credits
+
+Huge thanks to Techno Tim. You can watch his video tutorial [here](https://youtu.be/liV3c9m_OX8?si=qPIQsIdypHKt2hUq)
