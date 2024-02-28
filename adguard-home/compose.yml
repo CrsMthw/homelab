@@ -20,7 +20,7 @@ services:
       - /opt/adguardhome/conf:/opt/adguardhome/conf
     networks:
       priv_lan:
-        ipv4_address: 192.168.1.53 #if you comment this, it will take the first available IP from the set IP Range
+        ipv4_address: IP_ADDRESS #if you comment this, it will take the first available IP from the set IP Range
 networks:
   priv_lan:
     external: true
