@@ -1,0 +1,35 @@
+minimum-age: 30m
+
+authentication:
+  username: YOUR_USERNAME
+  password: YOUR_PASSWORD
+
+port: 3030
+
+triggers:
+  lidarr:
+    - name: lidarr
+      priority: 2
+
+  radarr:
+    - name: radarr
+      priority: 1
+
+  sonarr:
+    - name: sonarr
+      priority: 1
+
+targets:
+  plex:
+    - url: https://plex.example.com # URL of your Plex server
+      token: # Plex API Token
+      rewrite:
+        - from: /data/media/ # /data is basically /lake since thats how the volume is mounted
+          to: /media/ # path accessible by the Plex docker container (if applicable)
+
+  jellyfin:
+    - url: https://jf.example.com # URL of your Jellyfin server
+      token: # Jellyfin API Token
+      rewrite:
+        - from: /data/media/ # /data is basically /lake since thats how the volume is mounted
+          to: /media/ # path accessible by the Jellyfin docker container (if applicable)
