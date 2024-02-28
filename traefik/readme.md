@@ -1,4 +1,4 @@
-# Traefik reverse proxy with automatic wildcard SSL from cloudflare 
+# Traefik2 reverse proxy with automatic wildcard SSL from cloudflare 
 
 Create a DNS entry in your cloudflare: ```traefik.YOURDOMAIN.com``` Make sure it is not proxied at first (necessary for creating SSL certificate), you can enable proxy later after everything.
 
