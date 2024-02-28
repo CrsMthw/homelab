@@ -48,3 +48,15 @@ docker exec crowdsec-example cscli bouncers add traefik-bouncer
 - Uncomment that whole section and save it.
 
 - Recreate crowdsec with ```docker compose up -d --force-recreate```
+
+## Integrate with Traefik (Final Step)
+
+Go to the directory where traefik is setup. 
+
+If you have used my files, uncomment the parts in both traefik.yml and config.yml that is related to crowdsec and restart traefik using ```docker restart traefik```
+
+If you haven't used my files, refer to my [traefik data folder](https://git.crsmthw.com/crsmthw/homelab/src/branch/main/traefik/data) and add those parts from my config.yml and traefik.yml.
+
+## Credits
+
+Huge thanks to Techno Tim! You can watch his video tutorial [here](https://youtu.be/-GxUP6bNxF0?si=7dpWFtDHyq8JWBZi)
