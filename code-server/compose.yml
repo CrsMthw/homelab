@@ -1,0 +1,30 @@
+version: "3.8"
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Riyadh
+      - PASSWORD= #optional
+      - HASHED_PASSWORD= #optional
+      - SUDO_PASSWORD= #optional
+      - SUDO_PASSWORD_HASH= #optional
+      - PROXY_DOMAIN=code.example.com #optional
+      - DEFAULT_WORKSPACE=/config/workspace #optional
+    volumes:
+      - ./config:/config
+    networks:
+      - proxy
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.code-secure.entrypoints=https
+      - traefik.http.routers.code-secure.rule=Host(`code.example.com`)
+      - traefik.http.routers.code-secure.tls=true
+      - traefik.http.routers.code-secure.service=code
+      - traefik.http.services.code.loadbalancer.server.port=8443
+networks:
+  proxy:
+    external: true
