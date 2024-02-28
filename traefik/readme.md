@@ -72,6 +72,59 @@ Go to the directory with the compose.yml
 Run it with ```docker compose up -d```
 If everything is done right, you will be able to access the traefik dashboard at traefik.YOURDOMAIN.com in a few moments.
 
+## How to expose my docker containers to the internet
+
+First make sure you have created a DNS entry in your cloudflare for the service you want to expose
+Then all you have to do is add these labels to the compose.yml of all your containers that you want to expose:
+```
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.CONTAINER_NAME.entrypoints=https"
+      - "traefik.http.routers.CONTAINER_NAME.rule=Host(`SUBDOMAIN.YOURDOMAIN.COM`)"
+      - "traefik.http.routers.CONTAINER_NAME.tls=true"
+      - "traefik.http.routers.CONTAINER_NAME.service=CONTAINER_NAME@docker"
+      - "traefik.http.services.CONTAINER_NAME.loadbalancer.server.port=PORT_OF_CONTAINER_WEBUI"
+      - "traefik.docker.network=proxy"
+```
+Replace ```CONTAINER_NAME``` with the name of the docker container
+Replace ```SUBDOMAIN.YOURDOMAIN.COM```  with the URL you want your container webui to be exposed at.
+Replace ```PORT_OF_CONTAINER_WEBUI``` with the port of the container's webui
+
+### Example compose.yml of Heimdall Dashboard exposed with Traefik
+
+```
+version: "3.9"
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Riyadh
+    volumes:
+      - ./config:/config
+    networks:
+      - proxy
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.heimdall.entrypoints=https"
+      - "traefik.http.routers.heimdall.rule=Host(`dashboard.crsmthw.com`)"
+      - "traefik.http.routers.heimdall.tls=true"
+      - "traefik.http.routers.heimdall.service=heimdall@docker"
+      - "traefik.http.services.heimdall.loadbalancer.server.port=80"
+      - "traefik.docker.network=proxy"
+networks:
+  proxy:
+    external: true
+```
+
+## How to expose anything else
+
+By anything else I mean services on other computers or containers that cannot use the proxy network, like home-assistant for example which needs host network.
+For this you need to make entries in the config.yml file. An example of home-assistant is already given in the config.yml file.
+
 
 ## Credits
 
