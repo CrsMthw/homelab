@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    restart: always
+    ports:
+      # DNS Ports
+      - 53:53/tcp
+      - 53:53/udp
+      - 443:443/tcp
+      - 853:853/tcp
+      - 784:784/udp
+      - 3000:3000/tcp
+      - 80:80/tcp
+    environment:
+      TZ: Asia/Riyadh
+    volumes:
+      - /opt/adguardhome/work:/opt/adguardhome/work
+      - /opt/adguardhome/conf:/opt/adguardhome/conf
+    networks:
+      priv_lan:
+        ipv4_address: 192.168.1.53 #if you comment this, it will take the first available IP from the set IP Range
+networks:
+  priv_lan:
+    external: true
+    name: priv_lan
