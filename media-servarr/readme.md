@@ -71,7 +71,7 @@ lake
 ## Installation
 
 - Copy the compose.yml file
-- Make the required changes: the timezones, volume mounts, and IP address for plex and jellyfin sections and save it
+- Make the required changes: the timezones, volume mounts, the host url label ```example.com```, and IP address for plex and jellyfin sections and save it
 - Run it using ```docker compose up -d```
 - Go through the web-ui of all the apps and do all the settings and connections like connecting overseerr to radarr and sonarr, and connecting prowlarr to radarr, sonarr, lidarr, etc.
 - Go to Plex and/or Jellyfin web-ui and set up all your media folders. Like Movies = /media/movies.
