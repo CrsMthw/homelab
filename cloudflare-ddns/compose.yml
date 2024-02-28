@@ -1,0 +1,22 @@
+version: "3"
+services:
+  cloudflare-ddns:
+    container_name: Cloudflare-DDNS
+    image: favonia/cloudflare-ddns:latest
+    network_mode: host
+    restart: always
+    cap_drop:
+      - all
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      - TZ=Asia/Riyadh
+      - PGID=1000
+      - PUID=1000
+      - CF_API_TOKEN=YOUR_CLOUDFLARE_EDITZONEDNS_API_TOKEN
+      - DOMAINS=yourdomain.com #multiple A record subdomains are supported, check https://github.com/favonia/cloudflare-ddns for examples and more configurations
+      #- PROXIED=is(yourdomain.com) # uncomment if your root domain has cloudflare proxy enabled
+      - IP4_PROVIDER=cloudflare.doh
+      - IP6_PROVIDER=none
+      - UPDATE_CRON=@every 2m
