@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    container_name: heimdall
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Riyadh
+    volumes:
+      - ./config:/config
+    networks:
+      - proxy
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.heimdall-secure.entrypoints=https"
+      - "traefik.http.routers.heimdall-secure.rule=Host(`dash.example.com`)"
+      - "traefik.http.routers.heimdall-secure.tls=true"
+      - "traefik.http.routers.heimdall-secure.service=heimdall"
+      - "traefik.http.services.heimdall.loadbalancer.server.port=80"
+networks:
+  proxy:
+    external: true
