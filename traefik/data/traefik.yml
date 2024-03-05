@@ -8,11 +8,12 @@ api:
 entryPoints:
   http:
     address: ":80"
-    http:
-      redirections:
-        entryPoint:
-          to: https
-          scheme: https
+    # THE NEXT 5 LINES ARE A GLOBAL WAY TO REDIRECT ALL HTTP TRAFFIC TO HTTPS, NOT RECOMMENDED AS CLOUDFLARE DOES THAT FOR YOU ANYWAY AND YOU CAN SET IT ON A PER APP BASIS IF NEEDED. WILL NEED HTTP FOR INTERNAL NETWORK.
+    #http:
+      #redirections:
+        #entryPoint:
+          #to: https
+          #scheme: https
   https:
     address: ":443"
     http:
