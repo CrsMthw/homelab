@@ -70,10 +70,10 @@ Then all you have to do is add these labels to the compose.yml of all your conta
       - "traefik.http.routers.CONTAINER_NAME.entrypoints=http" # You can skip this line if you do not need http access at all. HTTP access can be useful for internal networks DNS resolver.
       - "traefik.http.routers.CONTAINER_NAME.rule=Host(`SUBDOMAIN.YOURDOMAIN.COM`)" # Same thing for this line. This is only for http.
       - traefik.http.routers.CONTAINER_NAME.middlewares=https-redirect@file # Remove this line if you do not want automatic http to https redirection or if you skipped the two lines above.
-      - "traefik.http.routers.CONTAINER_NAME.entrypoints=https"
-      - "traefik.http.routers.CONTAINER_NAME.rule=Host(`SUBDOMAIN.YOURDOMAIN.COM`)"
-      - "traefik.http.routers.CONTAINER_NAME.tls=true"
-      - "traefik.http.routers.CONTAINER_NAME.service=CONTAINER_NAME@docker"
+      - "traefik.http.routers.CONTAINER_NAME-secure.entrypoints=https"
+      - "traefik.http.routers.CONTAINER_NAME-secure.rule=Host(`SUBDOMAIN.YOURDOMAIN.COM`)"
+      - "traefik.http.routers.CONTAINER_NAME-secure.tls=true"
+      - "traefik.http.routers.CONTAINER_NAME-secure.service=CONTAINER_NAME@docker"
       - "traefik.http.services.CONTAINER_NAME.loadbalancer.server.port=PORT_OF_CONTAINER_WEBUI"
       - "traefik.docker.network=proxy"
 ```
@@ -102,10 +102,13 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.heimdall.entrypoints=https"
-      - "traefik.http.routers.heimdall.rule=Host(`dashboard.crsmthw.com`)"
-      - "traefik.http.routers.heimdall.tls=true"
-      - "traefik.http.routers.heimdall.service=heimdall@docker"
+      - "traefik.http.routers.heimdall.entrypoints=http"
+      - "traefik.http.routers.heimdall.rule=Host(`heimdall.example.com`)"
+      - traefik.http.routers.heimdall.middlewares=https-redirect@file
+      - "traefik.http.routers.heimdall-secure.entrypoints=https"
+      - "traefik.http.routers.heimdall-secure.rule=Host(`heimdall.example.com`)"
+      - "traefik.http.routers.heimdall-secure.tls=true"
+      - "traefik.http.routers.heimdall-secure.service=heimdall@docker"
       - "traefik.http.services.heimdall.loadbalancer.server.port=80"
       - "traefik.docker.network=proxy"
 networks:
