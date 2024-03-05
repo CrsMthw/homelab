@@ -82,6 +82,9 @@ Then all you have to do is add these labels to the compose.yml of all your conta
 ```
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.CONTAINER_NAME.entrypoints=http"
+      - "traefik.http.routers.CONTAINER_NAME.rule=Host(`SUBDOMAIN.YOURDOMAIN.COM`)"
+      - traefik.http.routers.CONTAINER_NAME.middlewares=https-redirect@file # Remove this line if you do not want automatic http to https redirection
       - "traefik.http.routers.CONTAINER_NAME.entrypoints=https"
       - "traefik.http.routers.CONTAINER_NAME.rule=Host(`SUBDOMAIN.YOURDOMAIN.COM`)"
       - "traefik.http.routers.CONTAINER_NAME.tls=true"
