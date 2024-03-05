@@ -22,29 +22,13 @@ Basically:
 
 ```
 mkdir traefik
-```
-```
 cd traefik
-```
-```
 touch compose.yml
-```
-```
 mkdir data
-```
-```
 cd data
-```
-```
 touch acme.json
-```
-```
 chmod 600 acme.json
-```
-```
 touch config.yml
-```
-```
 touch traefik.yml
 ```
 
