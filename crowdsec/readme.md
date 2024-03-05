@@ -34,7 +34,7 @@ Run it with ```docker compose up -d```
 - After crowdsec is up and running run the following command:
 
 ```
-docker exec crowdsec-example cscli bouncers add traefik-bouncer
+docker exec crowdsec cscli bouncers add traefik-bouncer
 ```
 
 - Copy the API key printed. You WON'T be able the get it again.
