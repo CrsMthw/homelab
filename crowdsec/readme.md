@@ -13,19 +13,15 @@ Let's setup directories in your homefolder like so:
 Basically:
 ```
 mkdir crowdsec
-```
-```
 cd crowdsec
-```
-```
 touch compose.yml
-```
-```
 mkdir config
-```
-```
+cd config
 touch acquis.yaml
+cd ..
 ```
+
+Then copy the contents from my compose.yml to yours and make the necessary changes.
 
 ## Run
 
