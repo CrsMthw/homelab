@@ -30,6 +30,8 @@ touch acme.json
 chmod 600 acme.json
 touch config.yml
 touch traefik.yml
+cd ..
+
 ```
 
 The contents to put inside those files are given here. Except for acme.json, which will be automatically generated.
