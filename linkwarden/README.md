@@ -25,3 +25,15 @@ Delete the original compose inside the ```/linkwarden``` folder with ```rm docke
 ## 4. Run
 
 Run it with ```docker compose up -d```
+Access it at your subdomain.domain.com
+Sign up and create your account
+
+## 5. Secure it
+
+After you create your account, make sure to disable sign ups, so that random people don't sign up.
+Edit the ```compose.yml``` with ```nano compose.yml``` and uncomment the following lines:
+```
+- NEXT_PUBLIC_DISABLE_REGISTRATION=true # add this line only after creating your user
+- DISABLE_NEW_SSO_USERS=true # add this line only after creating your user
+```
+Redeploy with ``` docker compose up -d```
