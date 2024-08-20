@@ -1,5 +1,6 @@
 networks:
   proxy:
+    external: true
   linkwarden:
 
 services:
@@ -48,15 +49,8 @@ services:
       - DATABASE_URL=postgres://linkwarden:Linkwarden123!@linkwarden-db:5432/linkwarden?sslmode=disable&max_conns=20&max_idle_conns=4
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:-DR5o8dX6SR5#g*@7z!k2%8#sf5S@RR6F}
       - NEXTAUTH_URL=${NEXTAUTH_URL:-http://localhost:3000}
-      - PAGINATION_TAKE_COUNT
-      - STORAGE_FOLDER
-      - SPACES_KEY
-      - SPACES_SECRET
-      - SPACES_ENDPOINT
-      - SPACES_REGION
-      - NEXT_PUBLIC_EMAIL_PROVIDER
-      - EMAIL_FROM
-      - EMAIL_SERVER
+      - PAGINATION_TAKE_COUNT=50
+      - STORAGE_FOLDER=/data
       - NEXT_PUBLIC_DISABLE_REGISTRATION=true
       - DISABLE_NEW_SSO_USERS=true
     depends_on:
