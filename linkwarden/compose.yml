@@ -13,8 +13,8 @@ services:
     env_file: .env
     environment:
       - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/postgres
-      - NEXT_PUBLIC_DISABLE_REGISTRATION=true # add this line only after creating your user
-      - DISABLE_NEW_SSO_USERS=true # add this line only after creating your user
+      #- NEXT_PUBLIC_DISABLE_REGISTRATION=true # add this line only after creating your user
+      #- DISABLE_NEW_SSO_USERS=true # add this line only after creating your user
     restart: always
     image: ghcr.io/linkwarden/linkwarden:latest
     volumes:
