@@ -8,6 +8,8 @@ The components included in this system are:
 - deluge
 - jackett
 - jellyfin
+- jellyseer
+- jellystat
 - lidarr
 - maintainerr
 - overseerr
@@ -53,6 +55,10 @@ lake
    |__deluge
    |__jackett
    |__jellyfin
+   |__jellyseer
+   |__jellystat
+   |  |__db
+   |
    |__lidarr
    |__maintainerr
    |__overseer
@@ -65,6 +71,9 @@ lake
    |__tautulli
    |__whisparr
    |__youtube-dl
+   |  |__appdata
+   |  |__users
+   |
    |__youtube-dl-mongodb
 ```
 
