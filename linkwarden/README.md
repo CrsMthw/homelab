@@ -4,6 +4,11 @@
 
 ```
 git clone https://github.com/linkwarden/linkwarden.git
+```
+
+Then go into the new linkwarden folder
+
+```
 cd linkwarden
 ```
 
