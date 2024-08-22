@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   qbittorrent:
     container_name: qbittorrent
@@ -348,6 +347,28 @@ services:
       - traefik.http.routers.overseerr-secure.service=overseerr
       - traefik.http.services.overseerr.loadbalancer.server.port=5055
       - traefik.docker.network=proxy
+  jellyseerr:
+    container_name: jellyseerr
+    image: fallenbagel/jellyseerr:latest
+    restart: unless-stopped
+    networks:
+      - proxy
+    ports:
+      - 5056:5055
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=Asia/Riyadh
+    depends_on:
+      - jellyfin
+    volumes:
+      - /lake/starr/jellyseerr:/app/config
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.jellyseerr-secure.entrypoints=https
+      - traefik.http.routers.jellyseerr-secure.rule=Host(`jellyseerr.example.com`)
+      - traefik.http.routers.jellyseerr-secure.tls=true
+      - traefik.http.routers.jellyseerr-secure.service=jellyseerr
+      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
   tautulli:
     container_name: tautulli
     image: ghcr.io/hotio/tautulli
@@ -370,6 +391,44 @@ services:
       - traefik.http.routers.tautulli-secure.service=tautulli
       - traefik.http.services.tautulli.loadbalancer.server.port=8181
       - traefik.docker.network=proxy
+  jellystat-db:
+    container_name: jellystat-db
+    image: postgres:15.2
+    restart: unless-stopped
+    networks:
+      - proxy
+    environment:
+      - POSTGRES_DB=jfstat
+      - POSTGRES_USER=jfstat
+      - POSTGRES_PASSWORD=DB_PASSWORD # CHANGE THIS TO A SECURE PASSWORD
+    volumes:
+      - /lake/starr/jellystat/db:/var/lib/postgresql/data
+  jellystat:
+    container_name: jellystat
+    image: cyfershepard/jellystat:latest
+    restart: unless-stopped
+    networks:
+      - proxy
+    ports:
+      - 3040:3000
+    environment:
+      - POSTGRES_USER=jfstat
+      - POSTGRES_PASSWORD=DB_PASSWORD # CHANGE THIS TO THE SAME SECURE PASSWORD FROM ABOVE
+      - POSTGRES_IP=jellystat-db
+      - POSTGRES_PORT=5432
+      - JWT_SECRET=SUPER_SECRET_STRING # CHANGE THIS TO A RANDOM SECURE STRING
+    depends_on:
+      - jellystat-db
+      - jellyfin
+    volumes:
+      - /lake/starr/jellystat:/app/backend/backup-data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.jellystat-secure.entrypoints=https
+      - traefik.http.routers.jellystat-secure.rule=Host(`jellystat.example.com`)
+      - traefik.http.routers.jellystat-secure.tls=true
+      - traefik.http.routers.jellystat-secure.service=jellystat
+      - traefik.http.services.jellystat.loadbalancer.server.port=3000
   ytdl_material:
     container_name: youtube-dl
     image: tzahi12345/youtubedl-material:latest
@@ -430,31 +489,34 @@ services:
     volumes:
       - /lake/starr/autoscan:/config
       - /lake:/data
-  #deleterr: # IF YOU WANT AUTOMATIC DELETION OF OLD WATCHED AND STALE MEDIA, UNCOMMENT THIS WHOLE SECTION BELOW. YOU CAN CONFIGURE IT https://github.com/rfsbraz/deleterr
-    #container_name: deleterr
-    #image: ghcr.io/rfsbraz/deleterr:latest
-    #restart: no
-    #networks:
-      #- proxy
-    #environment:
-      #LOG_LEVEL: INFO
-    #volumes:
-      #- /lake/starr/deleterr/config:/config
-      #- /lake/starr/deleterr/logs:/config/logs
-  #scheduler:
-    #container_name: deleterr-scheduler
-    #image: mcuadros/ofelia:latest
-    #restart: unless-stopped
-    #networks:
-      #- proxy
-    #depends_on:
-      #- deleterr
-    #command: daemon --docker
-    #volumes:
-      #- /var/run/docker.sock:/var/run/docker.sock:ro
-    #labels:
-      #ofelia.job-run.deleterr.schedule: "@weekly"
-      #ofelia.job-run.deleterr.container: deleterr
+  maintainerr:
+    container_name: maintainerr
+    image: ghcr.io/jorenn92/maintainerr:latest # or jorenn92/maintainerr:latest
+    restart: unless-stopped
+    networks:
+      - proxy
+    user: 1000:1000
+    environment:
+      - TZ=Asia/Riyadh # CHANGE THIS TO YOUR TIMEZONE
+      # - DEBUG=true # uncomment to enable debug logs
+    ports:
+      - 6246:6246
+    depends_on:
+      - radarr
+      - sonarr
+      - plex
+      - overseerr
+    volumes:
+      - type: bind
+        source: /lake/starr/maintainerr
+        target: /opt/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.maintainerr-secure.entrypoints=https
+      - traefik.http.routers.maintainerr-secure.rule=Host(`maintainerr.example.com`)
+      - traefik.http.routers.maintainerr-secure.tls=true
+      - traefik.http.routers.maintainerr-secure.service=maintainerr
+      - traefik.http.services.maintainerr.loadbalancer.server.port=6246
 networks:
   proxy:
     external: true
