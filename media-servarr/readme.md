@@ -36,6 +36,8 @@ lake
 |     |__movies
 |     |__music
 |     |__other
+|     |__shows
+|     |__xxx
 |
 |__media # this is where arr stack apps and youtube-dl organize media into, sub-categories inside are for the different apps
 |  |__anime
