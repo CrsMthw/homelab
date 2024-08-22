@@ -3,8 +3,8 @@
 ## 1. Clone the Linkwarden repository
 
 ```
-$ git clone https://github.com/linkwarden/linkwarden.git
-$ cd linkwarden
+git clone https://github.com/linkwarden/linkwarden.git
+cd linkwarden
 ```
 
 ## 2. Configure the Environment Variables
