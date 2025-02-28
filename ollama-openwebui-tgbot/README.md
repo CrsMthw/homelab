@@ -8,7 +8,7 @@ mkdir ollama
 cd ollama
 ```
 
-2. Download compose.yaml and .env files and put them in this folder
+2. Download ```compose.yaml``` and ```.env``` files and put them in this folder
 
 3. Make necesssary changes to both files
 
