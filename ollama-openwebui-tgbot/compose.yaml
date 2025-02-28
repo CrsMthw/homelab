@@ -1,0 +1,74 @@
+services:
+  ollama:
+    deploy:
+      resources:
+        reservations:
+          # devices:
+            # - driver: nvidia
+              # count: all
+              # capabilities:
+                # - gpu
+    volumes:
+      - ./ollama-data:/root/.ollama
+    networks:
+      - proxy
+    ports:
+      - 11434:11434
+    container_name: ollama
+    pull_policy: always
+    tty: true
+    restart: unless-stopped
+    image: ollama/ollama:${OLLAMA_DOCKER_TAG-latest}
+    env_file: .env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.ollama-secure.entrypoints=https
+      - traefik.http.routers.ollama-secure.rule=Host(`ollama.YOURDOMAIN.com`) # This is the domain for backend API. Change to YOURDOMAIN
+      - traefik.http.routers.ollama-secure.tls=true
+      - traefik.http.routers.ollama-secure.service=ollama
+      - traefik.http.services.ollama.loadbalancer.server.port=11434
+  open-webui:
+    build:
+      context: .
+      args:
+        OLLAMA_BASE_URL: /ollama
+      dockerfile: Dockerfile
+    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+    container_name: open-webui
+    volumes:
+      - ./open-webui-data:/app/backend/data
+    depends_on:
+      - ollama
+    networks:
+      - proxy
+    ports:
+      - 7777:8080
+    environment:
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - WEBUI_SECRET_KEY=${WEBUI_SECRET_KEY}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
+    env_file: .env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.open-webui-secure.entrypoints=https
+      - traefik.http.routers.open-webui-secure.rule=Host(`chat.YOURDOMAIN.com`) # This is the domain for the web GUI. Change to YOURDOMAIN
+      - traefik.http.routers.open-webui-secure.tls=true
+      - traefik.http.routers.open-webui-secure.service=open-webui
+      - traefik.http.services.open-webui.loadbalancer.server.port=8080
+  ### IF YOU WANT TO RUN A TELEGRAM AI CHAT BOT, UNCOMMENT THE LINES BELOW ###
+  # ollama-telegram:
+    # image: ruecat/ollama-telegram
+    # container_name: ollama-telegram
+    # restart: unless-stopped
+    # env_file: .env
+    # depends_on:
+      # - ollama
+    # networks:
+      # - proxy
+    # environment:
+      # - OLLAMA_BASE_URL=ollama
+networks:
+  proxy:
+    external: true
