@@ -17,6 +17,6 @@ cd ollama
 docker compose up -d
 ```
 
-5. Go to https://chat.YOURDOMAIN.com and setup the initial admin account
+5. Go to ```https://chat.YOURDOMAIN.com``` and setup the initial admin account
 
 6. Download any AI model of your choice from ollama.com from within the web-UI and chat away!
