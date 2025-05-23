@@ -1,0 +1,26 @@
+services:
+  convertx:
+    image: ghcr.io/c4illin/convertx
+    container_name: convertx
+    networks:
+      - proxy
+    restart: unless-stopped
+    environment:
+      - JWT_SECRET=A-LONG-RANDOM-STRING # CHANGE ME
+      - ACCOUNT_REGISTRATION=false
+      - ALLOW_UNAUTHENTICATED=false
+      - AUTO_DELETE_EVERY_N_HOURS=24
+      - HTTP_ALLOWED=false
+      - HIDE_HISTORY=false
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.convertx.entrypoints=https
+      - traefik.http.routers.convertx.rule=Host(`convert.YOURDOMAIN.com`) # CHANGE ME
+      - traefik.http.routers.convertx.tls=true
+      - traefik.http.routers.convertx.service=convertx
+      - traefik.http.services.convertx.loadbalancer.server.port=3000
+    volumes:
+      - ~/convertx:/app/data
+networks:
+  proxy:
+    external: true
