@@ -5,17 +5,12 @@
 
 First go to your cloudflare at https://dash.cloudflare.com and create a new CNAME record, something like ```convert.YOURDOMAIN.com```
 
-Then let's setup directories in your homefolder like so:
-- ~/convertx
-
-Basically:
+Create a folder in your home directory
 ```
 mkdir ~/convertx
-cd ~/convertx
 ```
-
-Then copy the contents from my compose.yml to your portainer > stacks > create new stack, and make the necessary changes.
-
 ## Run
 
-Ater making the changes in the compose.yml, deploy it.
+- Copy the contents from my compose.yml to your portainer > stacks > create new stack, and make the necessary changes.
+
+- Ater making the changes in the compose.yml, deploy it.
