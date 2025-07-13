@@ -9,7 +9,7 @@ Check out: https://immich.app
 - Traefik already setup
 - A subdomain created with ```photos.YOURDOMAIN.com``` or whatever
 - Since I use an nvidia card, this installation pretty much uses the nvidia setup. If you have an Nvidia GPU, make sure that your GPU is accessible to docker containers. If you are not using an nvidia card, make sure you change the files I provided with the appropriate drivers.
-- If you have not done the NVIDIA setup to make it accessible to docker containers, follow the simple guide here: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+- If you have an NVIDIA card, but have not done the NVIDIA setup to make it accessible to docker containers, follow the simple guide here: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
 
 # Installation
 
