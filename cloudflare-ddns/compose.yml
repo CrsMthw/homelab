@@ -1,4 +1,3 @@
-version: "3"
 services:
   cloudflare-ddns:
     container_name: Cloudflare-DDNS
