@@ -4,7 +4,7 @@ http:
     homeassistant:
       entryPoints:
         - "https"
-      rule: "Host(`hass.EXAMPLE.com`)"
+      rule: "Host(`hass.YOURDOMAIN.com`)"
       middlewares:
         - default-headers
       tls: {}
