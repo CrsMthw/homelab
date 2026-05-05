@@ -12,7 +12,7 @@ The components included in this system are:
 - jellystat
 - lidarr
 - maintainerr
-- overseerr
+- seerr
 - plex
 - prowlarr
 - qbittorrent
@@ -63,7 +63,7 @@ lake
    |
    |__lidarr
    |__maintainerr
-   |__overseer
+   |__seerr
    |__plexmediaserver
    |__prowlarr
    |__qbittorrent
@@ -91,7 +91,7 @@ lake
 
 ## How to use
 
-Once you setup and install everything and do all the configs and connections right, you can go to ```ovs.example.com``` to request a movie/show and everything else should be done automagically in the backend, and the media will be available on your plex/jellyfin to enjoy!
+Once you setup and install everything and do all the configs and connections right, you can go to ```seerr.example.com``` to request a movie/show and everything else should be done automagically in the backend, and the media will be available on your plex/jellyfin to enjoy!
 
 For everything else other than movies/shows, you have to visit the respective app to request for the media you want.
 
