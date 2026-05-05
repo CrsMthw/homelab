@@ -11,12 +11,12 @@ The components included in this system are:
 - jellystat
 - lidarr
 - maintainerr
-- seerr
+- seerr (removed overseerr and jellyseerr for this updated one)
 - plex
 - prowlarr
 - qbittorrent
 - radarr
-- readarr
+- readarr (now removed, cos no longer maintained)
 - sonarr
 - tautulli
 - whisparr
