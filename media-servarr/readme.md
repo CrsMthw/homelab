@@ -8,7 +8,6 @@ The components included in this system are:
 - deluge
 - jackett
 - jellyfin
-- jellyseer
 - jellystat
 - lidarr
 - maintainerr
@@ -57,7 +56,6 @@ lake
    |__deluge
    |__jackett
    |__jellyfin
-   |__jellyseer
    |__jellystat
    |  |__db
    |
@@ -84,7 +82,7 @@ lake
 - Copy the compose.yml file
 - Make the required changes: the timezones, volume mounts, the host url label ```example.com```, and IP address for plex and jellyfin sections and save it
 - Run it using ```docker compose up -d```
-- Go through the web-ui of all the apps and do all the settings and connections like connecting overseerr to radarr and sonarr, and connecting prowlarr to radarr, sonarr, lidarr, etc.
+- Go through the web-ui of all the apps and do all the settings and connections like connecting seerr to radarr and sonarr, and connecting prowlarr to radarr, sonarr, lidarr, etc.
 - Go to Plex and/or Jellyfin web-ui and set up all your media folders. Like Movies = /media/movies.
 - Since autoscan does not have a webui, it has to be configured using config files. Copy the config files for autoscan and make changes to it as per your needs and save them.
 - Restart the entire stack by going into the directory with the compose.yml file and entering ```docker compose up -d --force-recreate```
