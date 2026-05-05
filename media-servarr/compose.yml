@@ -192,32 +192,6 @@ services:
       - traefik.http.routers.lidarr-secure.service=lidarr
       - traefik.http.services.lidarr.loadbalancer.server.port=8686
       - traefik.docker.network=proxy
-  readarr:
-    container_name: readarr
-    image: ghcr.io/hotio/readarr
-    restart: unless-stopped
-    networks:
-      - proxy
-    ports:
-      - 8787:8787
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Riyadh # CHANGE THIS TO YOUR TIMEZONE
-    depends_on:
-      - prowlarr
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /lake/starr/readarr:/config
-      - /lake:/data
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.readarr-secure.entrypoints=https
-      - traefik.http.routers.readarr-secure.rule=Host(`readarr.example.com`)
-      - traefik.http.routers.readarr-secure.tls=true
-      - traefik.http.routers.readarr-secure.service=readarr
-      - traefik.http.services.readarr.loadbalancer.server.port=8787
-      - traefik.docker.network=proxy
   whisparr:
     container_name: whisparr
     image: ghcr.io/hotio/whisparr
@@ -321,9 +295,9 @@ services:
       - traefik.http.routers.jackett-secure.service=jackett
       - traefik.http.services.jackett.loadbalancer.server.port=9117
       - traefik.docker.network=proxy
-  overseerr:
-    container_name: overseerr
-    image: ghcr.io/hotio/overseerr
+  seerr:
+    container_name: seerr
+    image: ghcr.io/hotio/seerr
     restart: unless-stopped
     networks:
       - proxy
@@ -338,37 +312,15 @@ services:
       - radarr
       - sonarr
     volumes:
-      - /lake/starr/overseerr:/config
+      - /lake/starr/seerr:/config
     labels:
       - traefik.enable=true
-      - traefik.http.routers.overseerr-secure.entrypoints=https
-      - traefik.http.routers.overseerr-secure.rule=Host(`ovs.example.com`)
-      - traefik.http.routers.overseerr-secure.tls=true
-      - traefik.http.routers.overseerr-secure.service=overseerr
-      - traefik.http.services.overseerr.loadbalancer.server.port=5055
+      - traefik.http.routers.seerr-secure.entrypoints=https
+      - traefik.http.routers.seerr-secure.rule=Host(`seerr.example.com`)
+      - traefik.http.routers.seerr-secure.tls=true
+      - traefik.http.routers.seerr-secure.service=seerr
+      - traefik.http.services.seerr.loadbalancer.server.port=5055
       - traefik.docker.network=proxy
-  jellyseerr:
-    container_name: jellyseerr
-    image: fallenbagel/jellyseerr:latest
-    restart: unless-stopped
-    networks:
-      - proxy
-    ports:
-      - 5056:5055
-    environment:
-      - LOG_LEVEL=debug
-      - TZ=Asia/Riyadh
-    depends_on:
-      - jellyfin
-    volumes:
-      - /lake/starr/jellyseerr:/app/config
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.jellyseerr-secure.entrypoints=https
-      - traefik.http.routers.jellyseerr-secure.rule=Host(`jellyseerr.example.com`)
-      - traefik.http.routers.jellyseerr-secure.tls=true
-      - traefik.http.routers.jellyseerr-secure.service=jellyseerr
-      - traefik.http.services.jellyseerr.loadbalancer.server.port=5055
   tautulli:
     container_name: tautulli
     image: ghcr.io/hotio/tautulli
@@ -505,7 +457,7 @@ services:
       - radarr
       - sonarr
       - plex
-      - overseerr
+      - seerr
     volumes:
       - type: bind
         source: /lake/starr/maintainerr
