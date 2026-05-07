@@ -443,7 +443,7 @@ services:
       - /lake:/data
   maintainerr:
     container_name: maintainerr
-    image: ghcr.io/jorenn92/maintainerr:latest # or jorenn92/maintainerr:latest
+    image: ghcr.io/maintainerr/maintainerr:latest
     restart: unless-stopped
     networks:
       - proxy
